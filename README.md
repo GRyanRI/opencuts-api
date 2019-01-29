@@ -1,130 +1,34 @@
-# Serverless Node.js Starter
+# opencuts-client
 
-A Serverless starter that adds ES7 syntax, serverless-offline, environment variables, and unit test support. Part of the [Serverless Stack](http://serverless-stack.com) guide.
+Project Goals:
+* Continue my learning of React.js 
+* Take on a new challenge: Use AWS/Python to build my backend
+* Create a web app for Barbers can use to manage appointments
 
-[Serverless Node.js Starter](https://github.com/AnomalyInnovations/serverless-nodejs-starter) uses the [serverless-webpack](https://github.com/serverless-heaven/serverless-webpack) plugin, [Babel](https://babeljs.io), [serverless-offline](https://github.com/dherault/serverless-offline), and [Jest](https://facebook.github.io/jest/). It supports:
+Itinerary:
+[x]Setup Backend using AWS services: DynamoDB, S3 Buckets, Cognito(user auth), Lambda(Python), and API Gateway
 
-- **ES7 syntax in your handler functions**
-  - Use `import` and `export`
-- **Package your functions using Webpack**
-- **Run API Gateway locally**
-  - Use `serverless offline start`
-- **Support for unit tests**
-  - Run `npm test` to run your tests
-- **Sourcemaps for proper error messages**
-  - Error message show the correct line numbers
-  - Works in production with CloudWatch
-- **Automatic support for multiple handler files**
-  - No need to add a new entry to your `webpack.config.js`
-- **Add environment variables for your stages**
+[x]Build a React App
 
----
+[x]Deploy site using serverless AWS
 
-### Demo
+Progress Notes:
 
-A demo version of this service is hosted on AWS - [`https://z6pv80ao4l.execute-api.us-east-1.amazonaws.com/dev/hello`](https://z6pv80ao4l.execute-api.us-east-1.amazonaws.com/dev/hello)
+Backend:
 
-And here is the ES7 source behind it
+* Simply setting up your AWS account/applications can be time consuming. There are many options. Some options CANNOT be changed  once the initials settings are in place. An example of this is when setting the user authentication settings, if you choose to ask your user to use a username to login, once that is set, you cannot change it to allow them to use simply their email. It will be looking for a username. This was a bit of a setback for me, so I figured I’d throw it out there.
+* Setting up a DynamoDB table was rather easy. DynamoDB is a managed, NoSQL database. DynamoDB makes it extremely easy to update your tables. It’s flexible, and I think I will enjoy using it as I continue to scale up this project.
+* Setting up the S3 bucket was also a breeze. BUT, make sure you copy ALL the information the give you down somewhere. You are constantly required to provide 'clientIds' and ‘keys’ throughout the process of building a backend on AWS.
+* Make sure to update the CORS permission tag correctly. Google has some good info on what settings to use.
+* Amazon Cognito is really cool when it come to setting up user auth for your site. BUT, I think this is where this project has become a bit of a struggle. Cognito has all kinds of COOL options as far as how you can allow your users to access your site. You can login in popular ways like using your Google account, or Facebook even! Sounds great right?!? It is great. I’ll admit it. But, there are so many rabbit-holes there, and they got me. At this point in my project, I’m having token issues. I can seem to POST data. It’s been a bit of a nightmare to try and work out these issues simply using online documentation provided by Amazon or StackOverflow, but I feel like I can get it resolved with a little more trial and error.
+* Next step was making this project ‘serverless’. API Gateway was an easy way to setup the API, and seems like it would be easy to maintain going forward, which I thought was nice. API Gateway works with AWS Lambda. Lambda ended up confusing me, because it’s Python-based. Lambda is a lot like an arrow function is to javascript. Different syntax. Now that I’ve taken on learning new programming languages, I do like to clean up my code as much as possible, so I do like to try to learn ways to DRY out my code. Just my opinion, I like to learn shortcuts.
+* The serverless framework made it easy to get up and running, and to create a project. (https://serverless.com/)
+* After building the API, deploying the backend wasn’t too hard. AWS instructions are pretty clear. 
 
-``` javascript
-export const hello = async (event, context) => {
-  return {
-    statusCode: 200,
-    body: JSON.stringify({
-      message: `Go Serverless v1.0! ${(await message({ time: 1, copy: 'Your function executed successfully!'}))}`,
-      input: event,
-    }),
-  };
-};
+Frontend:
 
-const message = ({ time, ...rest }) => new Promise((resolve, reject) =>
-  setTimeout(() => {
-    resolve(`${rest.copy} (with a delay)`);
-  }, time * 1000)
-);
-```
-
-### Requirements
-
-- [Install the Serverless Framework](https://serverless.com/framework/docs/providers/aws/guide/installation/)
-- [Configure your AWS CLI](https://serverless.com/framework/docs/providers/aws/guide/credentials/)
-
-### Installation
-
-To create a new Serverless project.
-
-``` bash
-$ serverless install --url https://github.com/AnomalyInnovations/serverless-nodejs-starter --name my-project
-```
-
-Enter the new directory
-
-``` bash
-$ cd my-project
-```
-
-Install the Node.js packages
-
-``` bash
-$ npm install
-```
-
-### Usage
-
-To run unit tests on your local
-
-``` bash
-$ npm test
-```
-
-To run a function on your local
-
-``` bash
-$ serverless invoke local --function hello
-```
-
-To simulate API Gateway locally using [serverless-offline](https://github.com/dherault/serverless-offline)
-
-``` bash
-$ serverless offline start
-```
-
-Run your tests
-
-``` bash
-$ npm test
-```
-
-We use Jest to run our tests. You can read more about setting up your tests [here](https://facebook.github.io/jest/docs/en/getting-started.html#content).
-
-Deploy your project
-
-``` bash
-$ serverless deploy
-```
-
-Deploy a single function
-
-``` bash
-$ serverless deploy function --function hello
-```
-
-To add another function as a new file to your project, simply add the new file and add the reference to `serverless.yml`. The `webpack.config.js` automatically handles functions in different files.
-
-To add environment variables to your project
-
-1. Rename `env.example` to `env.yml`.
-2. Add environment variables for the various stages to `env.yml`.
-3. Uncomment `environment: ${file(env.yml):${self:provider.stage}}` in the `serverless.yml`.
-4. Make sure to not commit your `env.yml`.
-
-### Support
-
-- Send us an [email](mailto:contact@anoma.ly) if you have any questions
-- Open a [new issue](https://github.com/AnomalyInnovations/serverless-nodejs-starter/issues/new) if you've found a bug or have some suggestions.
-- Or submit a pull request!
-
-### Maintainers
-
-Serverless Node.js Starter is maintained by Frank Wang ([@fanjiewang](https://twitter.com/fanjiewang)) & Jay V ([@jayair](https://twitter.com/jayair)). [**Subscribe to our newsletter**](http://eepurl.com/cEaBlf) for updates. Send us an [email](mailto:contact@anoma.ly) if you have any questions.
-# opencuts-api
+* React.js… after 900 youtube videos, classwork, reading different strategies online. I might know how to use it properly. Might.
+* Learned how to integrate bootstrap with React. Something I’ve found to be very, very useful.
+* React Router. I think I may have issues here. Can’t really have a single-page app with authentication without it, so I’m still learning it. I feel like I’m getting better with managing state.
+* AWS Amplify integrates the backend with the React.js frontend. (It also works with iOS & Android… Future Goals.)
+* I’ve gotten as far as creating different components that interact very well together on the frontend, but there are issues connect to the backend. Signup/Login works, but I believe there is an authentication issue when trying to create new appointments. This is where I’m current at in this project. I’m working on straightening out the authentication errors.
